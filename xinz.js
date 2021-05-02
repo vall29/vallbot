@@ -299,6 +299,21 @@ More? rakit sendirilah`
 				if (!arg) return aqul.reply(from, `Penggunaan ${prefix}hidetag teks`, qul)
 				aqul.hideTag(from, arg)
 				break
+			case prefix+'setgroupicon':
+				if (!isQuotedSticker) return aqul.reply(from, `Kirim gambar dengan caption ${prefix}, atau reply gambar`, qul)
+                		const mediaData = await decryptMedia(message)
+                		const imageBase64 = `data:${mimetype};base64,${mediaData.toString('base64')}`
+                		await aqul.setGroupIcon(from, imageBase64)
+                		aqul.sendTextWithMentions(from, `Profile group telah diubah oleh admin @${sender.id.replace('@c.us','')}`)
+            			} else if (quotedMsg && quotedMsg.type == 'image') {
+                		const mediaData = await decryptMedia(quotedMsg)
+                		const imageBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
+                		await aqul.setGroupIcon(from, imageBase64)
+                		aqul.sendTextWithMentions(from, `Profile group telah diubah oleh admin @${sender.id.replace('@c.us','')}`)
+            			} else {
+                		aqul.reply(from, `Wrong Format!\n⚠️ Harap Kirim Gambar Dengan #setgroupicon`, id)
+            			}
+            			break
 			case 'runtime':
 				run = process.uptime()
 				let text = aqul.runtime(run)
